@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b32">
+<title>My Money Tracker</title>
+<style>
+:root{--bg:#f4f7f3;--card:#fff;--ink:#18352e;--muted:#66776f;--green:#246b50;--pale:#e5f2e9;--line:#e1e9e2;--red:#b44747;--gold:#f4c96b}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}input[type="color"]{height:44px;padding:4px;cursor:pointer}
+header{background:linear-gradient(140deg,#173b32,#2c7658);color:white;padding:26px 18px 24px;border-radius:0 0 25px 25px}
+.wrap{max-width:760px;margin:auto}header .eyebrow{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}h1{font-size:27px;margin:5px 0 4px}header p{margin:0;opacity:.85;font-size:14px}
+main{padding:16px;max-width:760px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:0 3px 12px #163a2d08;margin-bottom:13px}.stat-label{font-size:12px;color:var(--muted)}.stat{font-size:24px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}.sub{font-size:12px;color:var(--muted);margin-top:3px}.section-title{font-size:17px;margin:2px 0 12px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}input,select,textarea{width:100%;font:inherit;font-size:14px;border:1px solid #d6e1d8;border-radius:11px;padding:11px;background:#fff;color:var(--ink)}button{border:0;border-radius:11px;padding:12px 14px;font:inherit;font-weight:650;cursor:pointer}.primary{background:var(--green);color:#fff;width:100%;margin-top:13px}.secondary{background:var(--pale);color:var(--green)}.danger{background:#faeaea;color:var(--red)}.progress{height:9px;background:#e8eee9;border-radius:9px;overflow:hidden;margin:11px 0 5px}.progress span{height:100%;display:block;background:#3b9168;border-radius:9px;width:0%}.muted{color:var(--muted);font-size:12px}.item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.dot{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:var(--pale);font-size:18px;flex-shrink:0}.details{flex:1;min-width:0}.details b{display:block;font-size:14px;overflow-wrap:anywhere}.details small{color:var(--muted);font-size:11px}.amount{font-weight:750;white-space:nowrap}.minus{color:var(--red)}.plus{color:var(--green)}.empty{text-align:center;padding:18px;color:var(--muted);font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.note{background:#fff8e6;border:1px solid #f2e4bd;padding:12px;border-radius:12px;font-size:12px;line-height:1.5;margin-bottom:13px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 0 24px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="eyebrow" id="siteEyebrow">Your personal budget</div><h1 id="siteTitle">🌿 My Money Tracker</h1><p id="siteSubtitle">Small steps today, more savings tomorrow.</p><button type="button" id="toggleEditor" style="margin-top:16px;background:#ffffff20;color:#fff;border:1px solid #ffffff55">✏️ Edit Website</button></div></header>
+<main>
+  <section class="card" id="websiteEditor" hidden>
+    <h2 class="section-title">🎨 Customize your website</h2>
+    <p class="muted">Change the website's title, subtitle, colors, and the text labels. Your choices are saved in this browser on this phone.</p>
+    <label for="editEyebrow">Small heading</label><input id="editEyebrow" maxlength="70" placeholder="Your personal budget">
+    <label for="editTitle">Website title</label><input id="editTitle" maxlength="70" placeholder="🌿 My Money Tracker">
+    <label for="editSubtitle">Subtitle</label><input id="editSubtitle" maxlength="120" placeholder="Small steps today, more savings tomorrow.">
+    <div class="row"><div><label for="editHeaderColor">Header color</label><input id="editHeaderColor" type="color" value="#173b32"></div><div><label for="editAccentColor">Accent color</label><input id="editAccentColor" type="color" value="#246b50"></div></div>
+    <div class="row"><div><label for="editBackgroundColor">Page background</label><input id="editBackgroundColor" type="color" value="#f4f7f3"></div><div><label for="editCardColor">Card background</label><input id="editCardColor" type="color" value="#ffffff"></div></div>
+    <label for="editBudgetLabel">Weekly budget card label</label><input id="editBudgetLabel" maxlength="50" placeholder="Weekly budget">
+    <label for="editLeftLabel">Money-left card label</label><input id="editLeftLabel" maxlength="50" placeholder="Money left this week">
+    <label for="editSavingsLabel">Savings card label</label><input id="editSavingsLabel" maxlength="50" placeholder="Saved so far">
+    <label for="editSpentLabel">Spending card label</label><input id="editSpentLabel" maxlength="50" placeholder="Spent this week">
+    <label for="editPlanTitle">Weekly plan heading</label><input id="editPlanTitle" maxlength="70" placeholder="📅 Weekly plan">
+    <label for="editEntryTitle">Transaction form heading</label><input id="editEntryTitle" maxlength="70" placeholder="➕ Add a transaction">
+    <label for="editSettingsTitle">Settings heading</label><input id="editSettingsTitle" maxlength="70" placeholder="⚙️ Budget settings">
+    <label for="editTransactionsTitle">Transactions heading</label><input id="editTransactionsTitle" maxlength="70" placeholder="🧾 Recent transactions">
+    <div class="actions" style="margin-top:14px"><button type="button" class="primary" id="saveWebsiteEdits">Save changes</button><button type="button" class="secondary" id="resetWebsiteEdits">Reset design</button></div>
+  </section>
+  <div class="grid">
+    <div class="card"><div class="stat-label">Money left this week</div><div class="stat" id="left">₱300</div><div class="sub">From your weekly budget</div></div>
+    <div class="card"><div class="stat-label">Saved so far</div><div class="stat" id="saved">₱0</div><div class="sub">Your savings balance</div></div>
+    <div class="card"><div class="stat-label">Spent this week</div><div class="stat" id="spent">₱0</div><div class="sub">Expenses recorded</div></div>
+    <div class="card"><div class="stat-label">Weekly budget</div><div class="stat" id="budgetDisplay">₱300</div><div class="sub">Your spending limit</div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">📅 Weekly plan</h2>
+    <div class="row"><div><div class="stat-label">Transport plan</div><b>₱75 × 3 school days = ₱225</b></div><div><div class="stat-label">Savings goal</div><b id="goalDisplay">₱60 / week</b></div></div>
+    <div class="progress"><span id="progressBar"></span></div><div class="muted" id="progressText">0% of your weekly savings goal</div>
+    <p class="muted">Suggested split: ₱225 transport · ₱60 savings · ₱15 reserve. Adjust these amounts in Settings below.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">➕ Add a transaction</h2>
+    <form id="entryForm">
+      <div class="row"><div><label for="kind">Type</label><select id="kind"><option value="expense">Expense</option><option value="income">Money received</option><option value="saving">Add to savings</option><option value="withdraw">Withdraw from savings</option></select></div><div><label for="amount">Amount (₱)</label><input id="amount" type="number" min="0.01" step="0.01" placeholder="e.g. 15" required></div></div>
+      <div class="row"><div><label for="category">Category</label><select id="category"><option>Transport</option><option>Food</option><option>School</option><option>Personal</option><option>Family</option><option>Other</option></select></div><div><label for="date">Date</label><input id="date" type="date" required></div></div>
+      <label for="noteInput">Note (optional)</label><input id="noteInput" maxlength="80" placeholder="e.g. Jeepney fare home">
+      <button class="primary" type="submit">Save transaction</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">⚙️ Budget settings</h2>
+    <div class="row"><div><label for="weeklyBudget">Weekly money (₱)</label><input id="weeklyBudget" type="number" min="0" step="1" value="300"></div><div><label for="weeklyGoal">Weekly savings goal (₱)</label><input id="weeklyGoal" type="number" min="0" step="1" value="60"></div></div>
+    <div class="row"><div><label for="schoolDays">School days per week</label><input id="schoolDays" type="number" min="0" max="7" step="1" value="3"></div><div><label for="fareDay">Transport per school day (₱)</label><input id="fareDay" type="number" min="0" step="1" value="75"></div></div>
+    <button class="primary" id="saveSettings" type="button">Save settings</button>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">🧾 Recent transactions</h2>
+    <div id="transactions"><div class="empty">No transactions yet. Add your first one above.</div></div>
+    <div class="actions" style="margin-top:12px"><button class="secondary" id="exportBtn" type="button">Export CSV</button><button class="danger" id="clearBtn" type="button">Clear records</button></div>
+  </div>
+  <div class="note">🔒 <b>Your privacy:</b> records are saved in this browser on this phone using local storage. They don't automatically sync to another device. Clearing browser data or switching browsers may erase them, so use Export CSV for a backup.</div>
+  <div class="footer">Made for your ₱300 weekly budget · You can edit the plan any time.</div>
+</main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const peso=n=>'₱'+Number(n||0).toLocaleString('en-PH',{maximumFractionDigits:2});
+const today=()=>{let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+let settings={budget:300,goal:60,days:3,fare:75};
+let entries=[];
+try{settings={...settings,...JSON.parse(localStorage.getItem('mmt_settings')||'{}')};entries=JSON.parse(localStorage.getItem('mmt_entries')||'[]');}catch(e){}
+$('date').value=today();
+function persist(){try{localStorage.setItem('mmt_settings',JSON.stringify(settings));localStorage.setItem('mmt_entries',JSON.stringify(entries));}catch(e){alert('This browser may not allow saving data. Export a CSV backup regularly.');}}
+function weekStart(dateStr){let d=new Date(dateStr+'T12:00:00');let day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function render(){
+const now=today(), wk=weekStart(now), week=entries.filter(e=>weekStart(e.date)===wk);
+const spent=week.filter(e=>e.kind==='expense').reduce((s,e)=>s+e.amount,0);
+const received=week.filter(e=>e.kind==='income').reduce((s,e)=>s+e.amount,0);
+const left=settings.budget-spent+received;
+const saved=entries.reduce((s,e)=>s+(e.kind==='saving'?e.amount:e.kind==='withdraw'?-e.amount:0),0);
+const weekSaved=week.reduce((s,e)=>s+(e.kind==='saving'?e.amount:e.kind==='withdraw'?-e.amount:0),0);
+$('left').textContent=peso(left);$('spent').textContent=peso(spent);$('saved').textContent=peso(saved);$('budgetDisplay').textContent=peso(settings.budget);$('goalDisplay').textContent=peso(settings.goal)+' / week';
+let pct=settings.goal>0?Math.max(0,Math.min(100,weekSaved/settings.goal*100)):0;$('progressBar').style.width=pct+'%';$('progressText').textContent=Math.round(pct)+'% of weekly savings goal ('+peso(weekSaved)+' saved this week)';
+$('weeklyBudget').value=settings.budget;$('weeklyGoal').value=settings.goal;$('schoolDays').value=settings.days;$('fareDay').value=settings.fare;
+let list=[...entries].sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id)).slice(0,30);
+$('transactions').innerHTML=list.length?list.map(e=>{
+let sign=(e.kind==='income'||e.kind==='saving')?'+':'−';let cls=sign==='+'?'plus':'minus';let icon={expense:'🛍️',income:'💵',saving:'🐷',withdraw:'↩️'}[e.kind]||'🧾';
+let label={expense:e.category,income:'Money received',saving:'Added to savings',withdraw:'Savings withdrawal'}[e.kind];
+return `<div class="item"><div class="dot">${icon}</div><div class="details"><b>${esc(label)}${e.note?' · '+esc(e.note):''}</b><small>${esc(e.date)}</small></div><div class="amount ${cls}">${sign}${peso(e.amount)}</div><button class="danger" style="padding:7px 9px" data-delete="${e.id}" aria-label="Delete transaction">×</button></div>`;
+}).join(''):'<div class="empty">No transactions yet. Add your first one above.</div>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('entryForm').addEventListener('submit',e=>{
+e.preventDefault();let amount=Number($('amount').value);if(!Number.isFinite(amount)||amount<=0)return;
+entries.push({id:String(Date.now())+Math.random().toString(16).slice(2),kind:$('kind').value,amount,category:$('category').value,date:$('date').value||today(),note:$('noteInput').value.trim()});
+persist();$('amount').value='';$('noteInput').value='';render();
+});
+$('saveSettings').addEventListener('click',()=>{
+settings={budget:Math.max(0,Number($('weeklyBudget').value)||0),goal:Math.max(0,Number($('weeklyGoal').value)||0),days:Math.max(0,Math.min(7,Number($('schoolDays').value)||0)),fare:Math.max(0,Number($('fareDay').value)||0)};
+persist();render();alert('Budget settings saved.');
+});
+$('transactions').addEventListener('click',e=>{let id=e.target.getAttribute('data-delete');if(id&&confirm('Delete this transaction?')){entries=entries.filter(x=>x.id!==id);persist();render();}});
+$('clearBtn').addEventListener('click',()=>{if(confirm('Delete ALL transaction records? This cannot be undone. Export a CSV backup first if needed.')){entries=[];persist();render();}});
+$('exportBtn').addEventListener('click',()=>{
+let rows=[['Date','Type','Category','Amount PHP','Note'],...entries.map(e=>[e.date,e.kind,e.category,e.amount,e.note])];
+let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+let blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='my-money-tracker.csv';a.click();URL.revokeObjectURL(url);
+});
+
+const defaultSite = {
+  eyebrow:'Your personal budget', title:'🌿 My Money Tracker',
+  subtitle:'Small steps today, more savings tomorrow.',
+  header:'#173b32', accent:'#246b50', background:'#f4f7f3', card:'#ffffff',
+  budgetLabel:'Weekly budget', leftLabel:'Money left this week',
+  savingsLabel:'Saved so far', spentLabel:'Spent this week',
+  planTitle:'📅 Weekly plan', entryTitle:'➕ Add a transaction',
+  settingsTitle:'⚙️ Budget settings', transactionsTitle:'🧾 Recent transactions'
+};
+let site = {...defaultSite};
+try { site = {...site, ...JSON.parse(localStorage.getItem('mmt_site')||'{}')}; } catch(e) {}
+function applySite(){
+  $('siteEyebrow').textContent=site.eyebrow;
+  $('siteTitle').textContent=site.title;
+  $('siteSubtitle').textContent=site.subtitle;
+  document.documentElement.style.setProperty('--bg',site.background);
+  document.documentElement.style.setProperty('--card',site.card);
+  document.documentElement.style.setProperty('--green',site.accent);
+  document.querySelector('header').style.background=`linear-gradient(140deg, ${site.header}, ${site.accent})`;
+  const labels = document.querySelectorAll('.stat-label');
+  // Target the four dashboard labels in their display order.
+  if(labels[0]) labels[0].textContent=site.leftLabel;
+  if(labels[1]) labels[1].textContent=site.savingsLabel;
+  if(labels[2]) labels[2].textContent=site.spentLabel;
+  if(labels[3]) labels[3].textContent=site.budgetLabel;
+  const headings = document.querySelectorAll('main h2.section-title');
+  const headingValues=[site.planTitle,site.entryTitle,site.settingsTitle,site.transactionsTitle];
+  headings.forEach((h,i)=>{if(headingValues[i]!==undefined) h.textContent=headingValues[i];});
+}
+function loadSiteEditor(){
+  const map={editEyebrow:'eyebrow',editTitle:'title',editSubtitle:'subtitle',
+    editHeaderColor:'header',editAccentColor:'accent',editBackgroundColor:'background',editCardColor:'card',
+    editBudgetLabel:'budgetLabel',editLeftLabel:'leftLabel',editSavingsLabel:'savingsLabel',editSpentLabel:'spentLabel',
+    editPlanTitle:'planTitle',editEntryTitle:'entryTitle',editSettingsTitle:'settingsTitle',editTransactionsTitle:'transactionsTitle'};
+  Object.keys(map).forEach(id=>{ $(id).value=site[map[id]] ?? defaultSite[map[id]]; });
+}
+$('toggleEditor').addEventListener('click',()=>{
+  const editor=$('websiteEditor'); editor.hidden=!editor.hidden;
+  $('toggleEditor').textContent=editor.hidden?'✏️ Edit Website':'✖ Close Editor';
+  if(!editor.hidden) loadSiteEditor();
+});
+$('saveWebsiteEdits').addEventListener('click',()=>{
+  const map={editEyebrow:'eyebrow',editTitle:'title',editSubtitle:'subtitle',
+    editHeaderColor:'header',editAccentColor:'accent',editBackgroundColor:'background',editCardColor:'card',
+    editBudgetLabel:'budgetLabel',editLeftLabel:'leftLabel',editSavingsLabel:'savingsLabel',editSpentLabel:'spentLabel',
+    editPlanTitle:'planTitle',editEntryTitle:'entryTitle',editSettingsTitle:'settingsTitle',editTransactionsTitle:'transactionsTitle'};
+  Object.keys(map).forEach(id=>{site[map[id]]=$(id).value.trim() || defaultSite[map[id]];});
+  try { localStorage.setItem('mmt_site',JSON.stringify(site)); } catch(e) { alert('Could not save in this browser.'); }
+  applySite(); alert('Website customization saved on this device.');
+});
+$('resetWebsiteEdits').addEventListener('click',()=>{
+  if(confirm('Reset the website design and text to the original defaults?')){
+    site={...defaultSite}; try{localStorage.removeItem('mmt_site');}catch(e){}
+    applySite();loadSiteEditor();
+  }
+});
+applySite();
+render();
+})();
+</script>
+</body>
+</html>
